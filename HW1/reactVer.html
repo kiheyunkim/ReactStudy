@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="reactJs/babel.min.js"></script>
+    <script src="reactJs/react.development.js"></script>
+    <script src="reactJs/react-dom.development.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="reactVer">
+    </div>
+    <script type="text/babel">
+    
+        let Greeting  = (greeting, name)=>{
+            return name + ' says ' + greeting;
+        };
+
+        class InnerContents extends React.Component{
+            render(){
+                return(
+                    <h1>{this.props.name} says {this.props.greeting}</h1>
+                )
+            }
+        }
+
+        class OuterContents extends React.Component{
+            render(){
+                return(
+                    <div>
+                        <InnerContents name={this.props.name} greeting={this.props.greeting} />
+                    </div>
+                    )
+            }
+        }
+    
+        ReactDOM.render(
+            <div>
+                <OuterContents name='박쥐맨'  greeting='안녕' />
+                <OuterContents name='강한맨'   greeting='hi' />
+                <OuterContents name='철맨'  greeting='반갑' />
+            </div>
+            , document.getElementById('reactVer')
+        );
+
+    </script>
+    
+</body>
+</html> 

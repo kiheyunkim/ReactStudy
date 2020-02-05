@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<script>
+    let Greeting  = (greeting, name)=>{
+        return '<h1> ' + name + ' says ' + greeting + ' </h1><br>';
+    };
+
+    window.onload=()=>{
+        document.getElementById('onlyHtml').innerHTML += Greeting('안녕','박쥐맨');
+        document.getElementById('onlyHtml').innerHTML += (Greeting('hi','강한맨'));
+        document.getElementById('onlyHtml').innerHTML += (Greeting('반갑','철맨'));
+    };
+    
+</script>
+<body>
+    <div id = "onlyHtml">
+    </div>
+</body>
+</html>
