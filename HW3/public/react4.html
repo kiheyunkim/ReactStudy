@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src ="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id='container'></div>
+    <script type ="text/babel">
+        class Enemy extends React.Component{
+            constructor(props){
+                super(props);
+                this.intervalKey=0;
+            }
+            state={
+                opacity:1,
+                ball_top:Math.random() * 500,
+                ball_left:Math.random() * 500
+            }
+
+            componentDidMount(){
+                if(this.props.screenState ==='off')
+                    return false;
+
+                    this.intervalKey = setInterval(()=>this.setState({
+                    ball_top : Math.random() * 500,
+                    ball_left : Math.random() * 500,
+                }),1000);
+            }
+
+
+            componentWillUnmount(){
+                clearInterval(this.intervalKey);
+            }
+
+            render(){
+                const targetStyle={
+                    width:100,
+                    height:100,
+                    background:"yellow",
+                    borderRadius : 50,
+                    textAlighn:"center",
+                    position:"fixed",
+                    top:this.state.ball_top,    
+                    left:this.state.ball_left,
+                    borderWidth :5,
+                    opacity:this.state.opacity
+                }
+
+                return(
+                    <h3 style={targetStyle} onClick={ ()=>{
+                        clearInterval(this.intervalKey); 
+                        this.setState({opacity:0});
+                        this.props.endProcess();
+                    }}>enemy</h3>
+                );
+            }
+        }
+
+        class InputFrame extends React.Component{
+            state={
+                buttonLabel:'시작'
+            }
+            constructor(props){
+                super(props);
+                this.counter = undefined;
+                this.currentState = 'off';
+                console.log('frame');
+            }
+
+            render(){
+                return(
+                    <div>
+                        개수: <input type='text' onChange={(event)=>{
+                                this.counter = event.target.value;
+                            }} />
+                        <button onClick={(event)=>{
+                                if(this.currentState === 'off'){
+                                    if(Number.isInteger(parseInt(this.counter))){
+                                        this.props.GameControl('on');
+                                        this.props.inputControl(this.counter);
+                                        this.setState({buttonLabel:'정지'});
+                                        this.currentState = 'on';
+                                    }else{
+                                        alert('값을 입력하세요');
+                                    }
+                                }else{
+                                    this.props.GameControl('off');
+                                    this.currentState = 'off';
+                                    this.setState({buttonLabel:'시작'});
+                                }
+
+
+                                
+                            }
+                             }>{this.state.buttonLabel}</button>
+                    </div>
+                )
+            }
+        }
+
+        class GamePanelFrame extends React.Component{
+            constructor(props){
+                super(props);
+            }
+
+            render(){
+                const backgroundStyle={
+                    width:600,
+                    height:600,
+                    background:"gray"
+                };
+
+                if(this.props.screenState === 'on'){
+                    return(
+                            <div style={backgroundStyle}>
+                            {
+                                ((count)=>{
+                                    const element = (key)=> <div key={key}> <Enemy endProcess = {this.props.endProcess}/> </div>
+                                    let elementArray =[];
+                                    for(let i=0;i<count;++i)
+                                        elementArray.push(element(i));
+                                    console.log(elementArray);
+                                    return elementArray;
+
+                                })(this.props.counter)
+                            }
+                            </div>
+                                
+                    )
+                }else{
+                    return(<div/>)
+                }
+            }    
+        };
+
+        class GameFrame extends React.Component{        //메인 프레임 워크
+            constructor(props){
+                super(props);
+                this.enemyCount=0;
+                
+                
+            }
+
+            state= {
+                screenState : 'off',
+                leftCount : 0
+            }
+
+            MofidyRender =(value) =>{
+                if(value === 'on'){
+                    this.setState({screenState:'on'});
+                    this.state.screenState=value;
+                }else if(value === 'off'){
+                    this.setState({screenState:'off'});
+                    this.state.screenState=value;
+                }
+            }
+
+            MofidyEnemyCount = (count)=>{
+                this.enemyCount = count;
+                this.leftCount = count;
+            }
+
+            EndProcess = ()=>{
+                if(this.leftCount-1!==0){
+                    --this.leftCount;
+                }else{
+                    this.setState({screenState:'off'});
+                }
+            }
+
+            render(){
+                return(
+                    <div>
+                        <InputFrame GameControl={this.MofidyRender} inputControl={this.MofidyEnemyCount} />
+                        <GamePanelFrame screenState={this.state.screenState} counter={this.enemyCount} endProcess = {this.EndProcess} />
+                    </div>
+                )
+            }
+        }
+        ddd=[]
+        console.log(this.ddd);
+        ReactDOM.render(
+            <div>
+                <GameFrame ref={ref=>{this.ddd.push(ref)
+                }}/>
+            </div>
+            ,document.querySelector('#container'));
+
+        
+    </script>
+</body>
+
+</html>
