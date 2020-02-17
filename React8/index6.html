@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id='container'></div>
+</body>
+
+<script type="text/babel">
+    class Stuff extends React.Component{
+        render(){
+            {/* for문을 이용한 랜덤값 10개 출력*/}
+            
+            let elem = (key) => <p key={key}>{Math.random()}</p>
+            let arr = [];
+
+            for(let i=0;i<10;++i){
+                arr.push(elem(i));
+            }
+            
+            return(arr);
+        }
+    }
+
+    ReactDOM.render(
+        <Stuff />,
+        document.querySelector("#container")
+    );
+
+</script>
+
+</html>

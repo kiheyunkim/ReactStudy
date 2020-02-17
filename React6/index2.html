@@ -21,22 +21,42 @@
     <div id='container'></div>
 </body>
 <script type="text/babel">
-    class Letter extends React.Component{
+
+    class Square extends React.Component{
         render(){
-            let letterStyle={
-                padding : 10,
-                margin : 10,
-                backgroundColor : this.props.bgcolor,
-                color : "#333",
-                display : "inline-block",
-                fontFamily: "monospace",
-                fontSize: 32,
-                textAlign:"center"
-            }
+            const squareStyle = {
+                height:150,
+                backgroundColor:"#FF6663"
+            };
 
             return(
-                <div style={letterStyle}>
-                    {this.props.children}
+                <div style={squareStyle}>
+
+                </div>
+            )
+        }
+    }
+
+    class Label extends React.Component{
+        render(){
+            return(
+                <br/>
+            )
+        }
+    }
+
+    class Card extends React.Component{
+        render(){
+            const cardStyle = {
+                height : 200,
+                width : 150,
+                padding : 0,
+                backgroundColor:"#FFF",
+                boxShadow:"0px 0px 5px #666"
+            };
+            return(
+                <div style={cardStyle}>
+                    <Square />
                 </div>
             )
         }
@@ -44,13 +64,9 @@
 
     ReactDOM.render(
         <div>
-            <Letter bgcolor="#58BFFF">A</Letter>    
-            <Letter bgcolor="#FF605F">E</Letter>
-            <Letter bgcolor="#FFD52E">I</Letter>
-            <Letter bgcolor="#49DD8E">O</Letter>    
-            <Letter bgcolor="#AE99FF">U</Letter>
+            <Card/>
         </div>,
         document.querySelector('#container')
-    );
+    );    
 </script>
 </html>

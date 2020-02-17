@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id='container'></div>
+</body>
+
+<script type="text/babel">
+
+    class Counter extends React.Component{
+        render(){
+            let textStyle={
+                fontSize:72,
+                fontFamily:"sans-serif",
+                color:"#333",
+                fontWeight:"bold"
+            };
+
+            return (
+                <div style={textStyle}>
+                    {this.props.display}
+                </div>
+            );
+        }
+    }
+
+    class CounterParent extends React.Component{
+        constructor(props){
+            super(props);
+
+            this.state={
+                count:0
+            };
+        }
+
+        render(){
+            let backgroundStyle={
+                padding:50,
+                backgroundColor:"#FFC53A",
+                width:250,
+                height:100,
+                borderRadius:10,
+                textAlign:"center"
+            };
+
+            let buttonStyle={
+                fontSize:"1em",
+                width:30,
+                height:30,
+                fontFamily:"sans-serif",
+                color:"#333",
+                fontWeight:"bold",
+                lineHeight:"3px"
+            }
+
+            return(
+                <div style={backgroundStyle}>
+                    <Counter display={this.state.count} />
+                    {/* onClick에 함수를 전달하는 방법도 있다 하지만 람다식을 전달하면 좀더 깔끔해지긴한다. */}
+                    <button onClick={()=>{this.setState({count:this.state.count+1})}} style={buttonStyle}>+</button>
+                </div>
+            );
+        }
+    }
+
+    ReactDOM.render(
+        <div>
+            <CounterParent />
+        </div>
+        ,
+        document.querySelector('#container')
+   );
+
+</script>
+
+</html>
