@@ -4,6 +4,6 @@ import "./index.css";
 import MenuContainer from "./MenuContainer";
 
 ReactDOM.render(
-    <MenuContainer />,
-    document.querySelector('#container')
+  <MenuContainer/>, 
+  document.getElementById("container")
 );
